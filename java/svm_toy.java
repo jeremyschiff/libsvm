@@ -270,23 +270,19 @@ public class svm_toy extends Applet {
 			for(int i=0;i<prob.l;i++)
 			{
 				point p = point_list.elementAt(i);
-				prob.x[i][0] = new svm_node();
-				prob.x[i][0].index = 1;
-				prob.x[i][0].value = p.x;
+				prob.x[i][0] = new svm_node(1, p.x);
 				prob.y[i] = p.y;
 			}
 
 			// build model & classify
 			svm_model model = svm.svm_train(prob, param);
 			svm_node[] x = new svm_node[1];
-			x[0] = new svm_node();
-			x[0].index = 1;
 			int[] j = new int[XLEN];
 
 			Graphics window_gc = getGraphics();
 			for (int i = 0; i < XLEN; i++)
 			{
-				x[0].value = (double) i / XLEN;
+				x[0] = new svm_node(1, (double) i / XLEN);
 				j[i] = (int)(YLEN*svm.svm_predict(model, x));
 			}
 			
@@ -329,28 +325,20 @@ public class svm_toy extends Applet {
 			for(int i=0;i<prob.l;i++)
 			{
 				point p = point_list.elementAt(i);
-				prob.x[i][0] = new svm_node();
-				prob.x[i][0].index = 1;
-				prob.x[i][0].value = p.x;
-				prob.x[i][1] = new svm_node();
-				prob.x[i][1].index = 2;
-				prob.x[i][1].value = p.y;
+				prob.x[i][0] = new svm_node(1, p.x);
+				prob.x[i][1] = new svm_node(2, p.y);
 				prob.y[i] = p.value;
 			}
 
 			// build model & classify
 			svm_model model = svm.svm_train(prob, param);
 			svm_node[] x = new svm_node[2];
-			x[0] = new svm_node();
-			x[1] = new svm_node();
-			x[0].index = 1;
-			x[1].index = 2;
 
 			Graphics window_gc = getGraphics();
 			for (int i = 0; i < XLEN; i++)
 				for (int j = 0; j < YLEN ; j++) {
-					x[0].value = (double) i / XLEN;
-					x[1].value = (double) j / YLEN;
+          x[0] = new svm_node(1, (double) i / XLEN);
+					x[1] = new svm_node(2, (double) j / YLEN);
 					double d = svm.svm_predict(model, x);
 					if (param.svm_type == svm_parameter.ONE_CLASS && d<0) d=2;
 					buffer_gc.setColor(colors[(int)d]);

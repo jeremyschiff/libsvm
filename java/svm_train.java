@@ -278,9 +278,9 @@ class svm_train {
 			svm_node[] x = new svm_node[m];
 			for(int j=0;j<m;j++)
 			{
-				x[j] = new svm_node();
-				x[j].index = atoi(st.nextToken());
-				x[j].value = atof(st.nextToken());
+        int index = atoi(st.nextToken());
+        double value = atof(st.nextToken());
+				x[j] = new svm_node(index, value);
 			}
 			if(m>0) max_index = Math.max(max_index, x[m-1].index);
 			vx.addElement(x);

@@ -1820,9 +1820,13 @@ public class svm {
 	}
 
 	// Return parameter of a Laplace distribution 
-	private static double svm_svr_probability(svm_problem prob, svm_parameter param)
+	public static double svm_svr_probability(svm_problem prob, svm_parameter param)
 	{
-		int i;
+		assert(param.probability == 1 &&
+        (param.svm_type == svm_parameter.EPSILON_SVR ||
+            param.svm_type == svm_parameter.NU_SVR));
+
+    int i;
 		int nr_fold = 5;
 		double[] ymv = new double[prob.l];
 		double mae = 0;
@@ -2709,9 +2713,9 @@ public class svm {
 			model.SV[i] = new svm_node[n];
 			for(int j=0;j<n;j++)
 			{
-				model.SV[i][j] = new svm_node();
-				model.SV[i][j].index = atoi(st.nextToken());
-				model.SV[i][j].value = atof(st.nextToken());
+        int index = atoi(st.nextToken());
+        double value = atof(st.nextToken());
+				model.SV[i][j] = new svm_node(index, value);
 			}
 		}
 
