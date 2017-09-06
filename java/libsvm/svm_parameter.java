@@ -33,6 +33,24 @@ public class svm_parameter implements Cloneable,java.io.Serializable
 	public int shrinking;	// use the shrinking heuristics
 	public int probability; // do probability estimates
 
+  public svm_parameter() {
+    this.svm_type = svm_parameter.C_SVC;
+    this.kernel_type = svm_parameter.RBF;
+    this.degree = 3;
+    this.gamma = 0;	// 1/num_features
+    this.coef0 = 0;
+    this.nu = 0.5;
+    this.cache_size = 100;
+    this.C = 1;
+    this.eps = 1e-3;
+    this.p = 0.1;
+    this.shrinking = 1;
+    this.probability = 1; // changed this to 1 as our current way of predicting the regressions rely on it to compute expectation.
+    this.nr_weight = 0;
+    this.weight_label = new int[0];
+    this.weight = new double[0];
+  }
+
 	public Object clone() 
 	{
 		try 
